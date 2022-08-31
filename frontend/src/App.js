@@ -1,5 +1,5 @@
-function App() {
-    return null;
-}
+import Table from "./Table"
 
-export default App;
+export default function App() {
+    return <Table />
+}
