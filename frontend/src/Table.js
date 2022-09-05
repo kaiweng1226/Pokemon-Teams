@@ -271,6 +271,10 @@ export default function Table() {
     }
 
     function choosePokemon(poke) {
+        if (!poke) {
+            setDisplay([])
+            return
+        }
         poke = poke.toLowerCase()
         poke = capitalize(poke)
         const newDisplay = pokemon.filter((p) => {
@@ -280,6 +284,10 @@ export default function Table() {
     }
 
     function chooseAbility(ability) {
+        if (!ability) {
+            setDisplay([])
+            return
+        }
         ability = ability.toLowerCase()
         ability = capitalize(ability)
         const newDisplay = pokemon.filter((p) => {
@@ -363,6 +371,33 @@ export default function Table() {
                     alignItems: "center",
                 }}
             >
+                <BasicTextFields
+                    text="Enter Pokemon"
+                    onSubmit={choosePokemon}
+                    options={pokemon
+                        .map((p) => p.name)
+                        .sort((a, b) => {
+                            return a > b ? 1 : -1
+                        })}
+                ></BasicTextFields>
+                <BasicTextFields
+                    text="Enter Ability"
+                    onSubmit={chooseAbility}
+                    options={[
+                        ...new Set(pokemon.flatMap((p) => [...p.abilities])),
+                    ].sort((a, b) => {
+                        return a > b ? 1 : -1
+                    })}
+                ></BasicTextFields>
+            </div>
+
+            <div
+                style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                }}
+            >
                 <BasicSelect
                     label="Region"
                     change={changeRegion}
@@ -378,14 +413,6 @@ export default function Table() {
                     change={changeType2}
                     list={typeList}
                 ></BasicSelect>
-                <BasicTextFields
-                    text="Enter Pokemon"
-                    onSubmit={choosePokemon}
-                ></BasicTextFields>
-                <BasicTextFields
-                    text="Enter Ability"
-                    onSubmit={chooseAbility}
-                ></BasicTextFields>
             </div>
             <CustomizedTable
                 headers={headers}
